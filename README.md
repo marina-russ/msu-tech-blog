@@ -1,1 +1,1 @@
-# msu-tech-blgo
+# tech-blog
