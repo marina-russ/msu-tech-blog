@@ -3,6 +3,9 @@
 # Dependency directories
 node_modules/
 
+#notes
+notes.md
+
 # dotenv environment variables file
 .env
 .env.test
