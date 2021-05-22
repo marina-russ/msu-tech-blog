@@ -12,45 +12,23 @@ class User extends Model {
 // defines table configuration
 User.init(
   {
-    // defines id column
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    // defines username column
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    // defines email
-    email: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-      }
     },
-    // defines password
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [8],
-      }
+      },
     },
-    // defines twitter info
-    twitter: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    // defines github info
-    github: {
-      type: DataTypes.STRING,
-      allowNull: true
-    }
   },
   {
     hooks: {
@@ -64,10 +42,7 @@ User.init(
       },
     },
     sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'user',
+    modelName: 'User',
   }
 );
 
