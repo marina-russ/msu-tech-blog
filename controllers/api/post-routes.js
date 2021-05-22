@@ -1,52 +1,78 @@
 const router = require('express').Router();
-const { Post } = require('../../models/');
+const { Post, User, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.post('/', withAuth, async (req, res) => {
-  const body = req.body;
-
-  try {
-    const newPost = await Post.create({ ...body, userId: req.session.userId });
-    res.json(newPost);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+router.get('/post/:id/comments', withAuth, (req, res) => {
+  res.render('comments', {
+    loggedIn: req.session.loggedIn
+  })
 });
 
-router.put('/:id', withAuth, async (req, res) => {
-  try {
-    const [affectedRows] = await Post.update(req.body, {
-      where: {
-        id: req.params.id,
+router.get('/post/comments/:id', async (req, res) => {
+  const commentData = await Comment.findByPk(req.params.id, {
+    include: [
+      {
+        model: Post,
+        attributes: ['id'],
       },
-    });
-
-    if (affectedRows > 0) {
-      res.status(200).end();
-    } else {
-      res.status(404).end();
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
+    ],
+  });
+  const comment = commentData.get({ plain: true });
+  // console.log(comment)
+  res.render('comments', {
+    comment,
+    loggedIn: req.session.loggedIn
+  })
 });
 
-router.delete('/:id', withAuth, async (req, res) => {
-  try {
-    const [affectedRows] = Post.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+router.post('/:id/comment', (req, res) => {
+  Comment.create({
+    body: req.body.body,
+    postId: req.params.id,
+    userId: req.session.userId,
+  }).then((newComment) => {
+    res.status(200).json(newComment)
+  }).then(() => {
+    res.redirect('/')
+  })
+});
 
-    if (affectedRows > 0) {
-      res.status(200).end();
-    } else {
-      res.status(404).end();
+router.post('/', (req, res) => {
+  Post.create({
+    body: req.body.body,
+    title: req.body.title,
+    userId: req.session.userId
+  }).then((newPost) => {
+    res.status(200).json(newPost);
+  })
+});
+
+router.put('/:id', (req, res) => {
+  Post.update(req.body, {
+    where: {
+      id: req.params.id,
     }
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  }).then(newPost => {
+    res.status(200).json(newPost)
+  })
+})
+
+router.put('/', async (req, res) => {
+  // alert('hi')
+  res.redirect('/posts');
+  return;
+})
+
+router.delete('/:id', (req, res) => {
+  // console.log('try to delete post')
+  Post.destroy({
+    where: {
+      id: req.params.id,
+    },
+  }).then(newPost => {
+    res.status(200).json(newPost)
+    res.render('homepage')
+  })
 });
 
 module.exports = router;
