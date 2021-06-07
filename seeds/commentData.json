@@ -1,0 +1,14 @@
+[
+  {
+    "content": "This is a comment I've made on this post!",
+    "date_created": "01/02/2021",
+    "user_id": 1,
+    "post_id": 1
+  },
+  {
+    "content": "This is a comment a user has made on this post!",
+    "date_created": "01/02/2021",
+    "user_id": 2,
+    "post_id": 2
+  }
+]

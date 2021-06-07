@@ -1,24 +1,32 @@
-const newComment = async (e) => {
-  e.preventDefault();
+const addComment = async (event) => {
+  event.preventDefault();
 
-  const id = document.querySelector('#post_id').value.trim();
-  const body = document.querySelector('.comment-input').value.trim();
+  const commentContent = document.querySelector('#comment-desc').value.trim();
+  console.log(commentContent);
 
-  if (body) {
-    const response = await fetch(`/api/posts/${id}/comment`, {
+  const postId = window.location.toString().split('/')[window.location.toString().split('/').length - 1];
+  console.log(postId);
+
+  if (commentContent) {
+    const response = await fetch('/api/comments', {
       method: 'POST',
-      body: JSON.stringify({ body }),
-      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        postId,
+        commentContent
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
 
     if (response.ok) {
-      document.location.reload()
+      document.location.reload();
+    } else {
+      alert(response.statusText);
     }
   }
-};
 
-// add query selector from button
-let confirmComment = document.querySelector('#confirm-comment');
-if (confirmComment) {
-  confirmComment.addEventListener('click', newComment)
-};
+  console.log(commentContent);
+}
+
+document.getElementById('comment-btn').addEventListener('click', addComment);

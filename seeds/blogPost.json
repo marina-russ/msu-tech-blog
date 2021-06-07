@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Test Post",
+    "post": "This is an example blog post created by a user. The post can have multiple lines of content.",
+    "date_created": "01/01/2021",
+    "user_id": 2,
+    "post_id": 1
+  },
+  {
+    "id": 2,
+    "name": "Test Post #2",
+    "post": "This is another example blog post created by a separate user.",
+    "date_created": "01/01/2021",
+    "user_id": 1,
+    "post_id": 2
+  }
+]
