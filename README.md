@@ -16,4 +16,6 @@ SO THAT I can publish articles, blog posts, and my thoughts and opinions
 
 [Heroku Link](https://msu-tech-blog.herokuapp.com/)
 
-![App Screenshot](screenshot-tech-blog.png)
+![App Login Screenshot](screenshot-tech-blog.png)
+
+![App Dash Screenshot](screenshot-dash.png)
